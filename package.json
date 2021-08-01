@@ -1,0 +1,18 @@
+{
+  "name": "bili-short-url",
+  "version": "1.0.0",
+  "description": "将任意链接转化为Bilibili短链，例如：https://b23.tv/F78kbY",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/nodemon ./bin/www",
+    "build": "webpack --progress",
+    "preview": "npm run build && cross-env mode=preview npm run start",
+    "deploy": "npm run build && sls deploy"
+  },
+  "author": "1017866168@qq.com",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
