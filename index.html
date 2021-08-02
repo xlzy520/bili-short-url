@@ -16,9 +16,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/papercss@1.8.2/dist/paper.min.css">
   <link rel="stylesheet" href="./index.css?v=517">
   <link rel="stylesheet" href="./loading.css">
-  <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+<!--  <script src="https://unpkg.com/petite-vue" defer init></script>-->
+<!--  <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>-->
   <link href="https://cdn.bootcdn.net/ajax/libs/toastify-js/1.10.0/toastify.min.css" rel="stylesheet">
   <script async src="https://cdn.bootcdn.net/ajax/libs/toastify-js/1.10.0/toastify.min.js"></script>
+  <script async src="./modern-copy.js"></script>
   <script>
     var _hmt = _hmt || [];
     (function() {
@@ -36,24 +38,28 @@
 
   <div class="form">
     <div class="origin-url-input">
-      <input id="origin_url" type="url" name="origin_url"
+      <input id="origin_url" type="url" name="origin_url" v-model="inputUrl" @input="inputUrlChange"
              placeholder="https://www.bilibili.com/video/BV1Wv41157Wz">
-      <svg class="close-icon hidden" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z" fill="currentColor"></path></svg>
+      <svg class="close-icon" v-show="closeIconVisible" @click="clearInput" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z" fill="currentColor"></path></svg>
     </div>
 
-    <div class="submit-btn" id="submit">生成短链</div>
+    <div class="submit-btn" id="submit" @click="handleSubmit">生成短链</div>
+    <div class="submit-btn" id="submit10" @click="handleBatchSubmit">直接来十个</div>
     <div class="short-url">
       <div class="short-url-title">短链接</div>
-      <div class="short-url-item bg-gray">
-        <a id="short-url-value" rel="noreferrer" href="" target="_blank">
-          <div class="short-url-value"></div>
-          <svg class="hidden outbound-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound">
-            <path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path>
-            <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon>
-          </svg>
-        </a>
-        <div class="copy hidden">
-          复制
+      <div v-show="!hasValue" class="short-url-item bg-gray"></div>
+      <div v-show="hasValue">
+        <div v-for="item in list" :key="item" class="short-url-item">
+          <a id="short-url-value" rel="noreferrer" :href="item.url" target="_blank">
+            <div class="short-url-value">{{item.url}}</div>
+            <svg class="outbound-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound">
+              <path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path>
+              <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon>
+            </svg>
+          </a>
+          <div class="copy" @click="copy(item.url)">
+            复制
+          </div>
         </div>
       </div>
     </div>
@@ -61,119 +67,95 @@
       有BUG可以联系微信: lv1017866168
     </div>
   </div>
-  <div class="loading hidden">
+  <div class="loading" v-show="loadingVisible">
     <div class="mask"></div>
     <div class="pacman"><div></div><div></div><div></div><div></div><div></div></div>
   </div>
 
 </div>
 
-<script>
-  function handleSubmit() {
-    document.querySelector('#submit').addEventListener('click', () => {
-      toggleLoading(true)
-      const origin_url = document.querySelector('#origin_url')
-      let value = origin_url.value
-      const defaultValue = 'https://www.bilibili.com/video/BV1Wv41157Wz'
-      if (!value) {
-        value = defaultValue
-      }
-      // const base_url = 'http://localhost:5000/short_url?url='
-      const base_url = 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/short_url?url='
-      const url = base_url + encodeURIComponent(value)
-      // 好像发现一些同学用这个工具搞事，我暂时收集一些信息
-      fetch('https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/resource/add',{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          url: value, origin: '', type: 'B站短链',
-        })
-      })
-      fetch(url).then(res => res.json()).then(res => {
-        console.log(res);
-        if (res.success) {
-          const shortUrlLink = document.querySelector('#short-url-value')
-          const shortUrlValue = document.querySelector('.short-url-value')
-          const copy = document.querySelector('.copy')
-          shortUrlValue.textContent = res.short_url
-          shortUrlLink.href = res.short_url
-          document.querySelector('.outbound-icon').classList.remove('hidden')
-          document.querySelector('.copy').classList.remove('hidden')
-          document.querySelector('.bg-gray').classList.remove('bg-gray')
-          copy.click()
-        } else {
-          Toastify({
-            text: res.msg,
-            position: "center",
-            backgroundColor: "linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%)",
-            duration: 2000
-          }).showToast();
-        }
-
-      }).finally(() => {
-        toggleLoading(false)
-      })
-    })
-  }
-
-  // 为了让老婆好理解，暂时不做高度封装
-
-  function handleInitCopy() {
-    const clipboard = new ClipboardJS('.copy', {
-      text: function () {
-        return document.querySelector('.short-url-value').textContent;
-      }
-    });
-
-    clipboard.on('success', function (e) {
+<script type="module">
+  import { createApp } from 'https://cdn.jsdelivr.net/npm/petite-vue@0.2.3/dist/petite-vue.es.js'
+  createApp({
+    // exposed to all expressions
+    inputUrl: '',
+    closeIconVisible: false,
+    //dev 'http://localhost:5000/short_url?url='
+    defaultValue: 'https://www.bilibili.com/video/BV1Wv41157Wz',
+    baseUrl: 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/bsu?url=',
+    loadingVisible: false,
+    limit: 10,
+    list: [],
+    // getters
+    get hasValue() {
+      return this.list.length > 0
+    },
+    // methods
+    inputUrlChange(evt){
+      const value = evt.target.value
+      this.toggleCloseIcon(value)
+    },
+    // 清空输入框
+    clearInput(){
+      this.inputUrl = ''
+      this.closeIconVisible = false;
+    },
+    // 控制输入框的关闭图标显示与隐藏的方法
+    toggleCloseIcon(value) {
+      this.closeIconVisible = !!value;
+    },
+    // 控制loading状态显示与隐藏的方法
+    toggleLoading(show) {
+      this.loadingVisible = !!show;
+    },
+    copy(url){
+      mcopy(url)
       Toastify({
         text: "链接复制成功",
         position: "center",
         backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
         duration: 2000
       }).showToast();
-    });
-  }
-
-  // 控制输入框的关闭图标显示与隐藏的方法
-  function toggleCloseIcon(value) {
-    const closeIcon = document.querySelector('.close-icon')
-    const classList = closeIcon.classList
-    if (value) {
-      classList.contains('hidden') && classList.remove('hidden')
-    } else {
-      classList.add('hidden')
+    },
+    handleSubmit() {
+      this.toggleLoading(true)
+      let value = this.inputUrl? this.inputUrl : this.defaultValue
+      const url = this.baseUrl + encodeURIComponent(value)
+      fetch(url).then(res => res.json()).then(res => {
+        this.handleResults(res, true)
+      }).finally(() => {
+        this.toggleLoading(false)
+      })
+    },
+    handleBatchSubmit() {
+      this.toggleLoading(true)
+      let value = this.inputUrl? this.inputUrl : this.defaultValue
+      const url = this.baseUrl + encodeURIComponent(value)
+      for (let i = 0; i < this.limit; i++) {
+        fetch(url).then(res => res.json()).then(res => {
+          this.handleResults(res, false)
+        }).finally(() => {
+          this.toggleLoading(false)
+        })
+      }
+    },
+    handleResults(res, autoCopy = true) {
+      if (res.success) {
+        this.list.push({ url: res.short_url })
+        if (autoCopy) {
+          this.copy(res.short_url)
+        }
+      } else {
+        Toastify({
+          text: res.msg,
+          position: "center",
+          backgroundColor: "linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%)",
+          duration: 2000
+        }).showToast();
+      }
     }
-  }
 
-  // 控制loading状态显示与隐藏的方法
-  function toggleLoading(show) {
-    const closeIcon = document.querySelector('.loading')
-    const classList = closeIcon.classList
-    if (show) {
-      classList.contains('hidden') && classList.remove('hidden')
-    } else {
-      classList.add('hidden')
-    }
-  }
-
-  function init() {
-    handleSubmit()
-    handleInitCopy()
-    document.querySelector('#origin_url').addEventListener('change', (evt) => {
-      const value = evt.target.value
-      toggleCloseIcon(value)
-    })
-    document.querySelector('.close-icon').addEventListener('click', () => {
-      const origin_url = document.querySelector('#origin_url')
-      origin_url.value = ''
-      toggleCloseIcon()
-    })
-  }
-
-  init()
+  }).mount()
 </script>
 
 </body>
