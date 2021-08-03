@@ -25,6 +25,12 @@ html, body {
   color: #fff;
 }
 
+.tips{
+  margin-top: 10px;
+  font-size: 12px;
+  color: #ccc;
+}
+
 .submit-btn:hover{
   color: rgb(147, 51, 234);
   background: #fff;
