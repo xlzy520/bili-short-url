@@ -75,13 +75,13 @@
 </div>
 
 <script type="module">
+  // const baseUrl = 'http://localhost:5000/'
   const baseUrl = 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/'
   import { createApp } from 'https://cdn.jsdelivr.net/npm/petite-vue@0.2.3/dist/petite-vue.es.js'
   createApp({
     // exposed to all expressions
     inputUrl: '',
     closeIconVisible: false,
-    //dev 'http://localhost:5000/short_url?url='
     defaultValue: 'https://www.bilibili.com/video/BV1Wv41157Wz',
     baseUrl: baseUrl + 'short_url?url=',
     loadingVisible: false,
@@ -118,22 +118,10 @@
         duration: 2000
       }).showToast();
     },
-    uv(){
-      fetch(baseUrl+'resource/add',{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          url: this.inputUrl, origin: location.href, type: 'B站短链',
-        })
-      })
-    },
     handleSubmit() {
       this.toggleLoading(true)
       let value = this.inputUrl? this.inputUrl : this.defaultValue
-      const url = this.baseUrl + encodeURIComponent(value)
-      this.uv()
+      const url = this.baseUrl + encodeURIComponent(value)+'&href='+location.href
       fetch(url).then(res => res.json()).then(res => {
         this.handleResults(res, true)
       }).finally(() => {
