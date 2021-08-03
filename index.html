@@ -63,9 +63,9 @@
         </div>
       </div>
     </div>
-    <div class="footer">
-      暂时关闭图片短链 有问题可以联系微信: lv1017866168
-    </div>
+  </div>
+  <div class="footer">
+    暂时关闭图片短链，有问题可以联系微信: <span class="vx" @click="copy('lv1017866168')">lv1017866168（点击复制）</span>
   </div>
   <div class="loading" v-show="loadingVisible">
     <div class="mask"></div>
@@ -112,7 +112,7 @@
     copy(url){
       mcopy(url)
       Toastify({
-        text: "链接复制成功",
+        text: "复制成功",
         position: "center",
         backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
         duration: 2000
