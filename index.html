@@ -125,7 +125,7 @@
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          url: this.inputUrl, origin: window.origin, type: 'B站短链',
+          url: this.inputUrl, origin: location.href, type: 'B站短链',
         })
       })
     },
