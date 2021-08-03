@@ -44,7 +44,6 @@
     </div>
 
     <div class="submit-btn" id="submit" @click="handleSubmit">生成短链</div>
-    <div class="submit-btn" id="submit10" @click="handleBatchSubmit">直接来十个</div>
     <div class="short-url">
       <div class="short-url-title">短链接</div>
       <div v-show="!hasValue" class="short-url-item bg-gray"></div>
@@ -64,7 +63,7 @@
       </div>
     </div>
     <div class="footer">
-      有BUG可以联系微信: lv1017866168
+      暂时关闭图片短链 有问题可以联系微信: lv1017866168
     </div>
   </div>
   <div class="loading" v-show="loadingVisible">
@@ -82,9 +81,9 @@
     closeIconVisible: false,
     //dev 'http://localhost:5000/short_url?url='
     defaultValue: 'https://www.bilibili.com/video/BV1Wv41157Wz',
-    baseUrl: 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/bsu?url=',
+    baseUrl: 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/short_url?url=',
     loadingVisible: false,
-    limit: 10,
+    limit: 1,
     list: [],
     // getters
     get hasValue() {
@@ -126,18 +125,6 @@
       }).finally(() => {
         this.toggleLoading(false)
       })
-    },
-    handleBatchSubmit() {
-      this.toggleLoading(true)
-      let value = this.inputUrl? this.inputUrl : this.defaultValue
-      const url = this.baseUrl + encodeURIComponent(value)
-      for (let i = 0; i < this.limit; i++) {
-        fetch(url).then(res => res.json()).then(res => {
-          this.handleResults(res, false)
-        }).finally(() => {
-          this.toggleLoading(false)
-        })
-      }
     },
     handleResults(res, autoCopy = true) {
       if (res.success) {
