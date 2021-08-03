@@ -113,7 +113,7 @@ html, body {
 
 @media (max-width: 768px) {
   .title, .footer{
-    margin-top: 120px;
+    margin-top: 80px;
   }
   .form, .submit-btn{
     margin-top: 60px;
