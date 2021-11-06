@@ -104,7 +104,8 @@ html, body {
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin-top: 240px;
+  margin-top: 60px;
+  margin-bottom: 60px;
 }
 .footer a.logo{
   background-image: none;
@@ -115,12 +116,44 @@ html, body {
   display: none;
 }
 
+.buy-me-coffee{
+  width: 80%;
+  margin: auto;
+  margin-top: 80px;
+}
+.buy-me-coffee-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.buy-me-coffee img{
+  margin: auto;
+  margin-top: 30px;
+  height: 300px;
+}
+
+.img-tips{
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #999;
+}
+
 
 @media (max-width: 768px) {
   .title, .footer{
-    margin-top: 80px;
+    margin-top: 50px;
   }
   .form, .submit-btn{
     margin-top: 60px;
+  }
+  .buy-me-coffee-header{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .wx-tips{
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
   }
 }

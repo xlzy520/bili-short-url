@@ -64,13 +64,26 @@
       </div>
     </div>
   </div>
+  <div class="buy-me-coffee">
+    <div class="buy-me-coffee-header">
+      <div class="short-url-title">觉得好用，赞赏</div>
+      <div class="wx-tips">
+        有问题可以联系微信: <span class="vx" @click="copy('lv1017866168')">lv1017866168（点击复制）</span>
+      </div>
+    </div>
+    <div class="" @click="downloadImg">
+      <img class="" src="./wx.jpeg"/>
+      <div class="img-tips">点击保存</div>
+    </div>
+
+  </div>
   <div class="footer">
-    暂时关闭图片短链，有问题可以联系微信: <span class="vx" @click="copy('lv1017866168')">lv1017866168（点击复制）</span>
   </div>
   <div class="loading" v-show="loadingVisible">
     <div class="mask"></div>
     <div class="pacman"><div></div><div></div><div></div><div></div><div></div></div>
   </div>
+  <a download="wx.jpeg" href="./wx.jpeg" class="hidden" id="download"></a>
 
 </div>
 
@@ -117,6 +130,13 @@
         backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
         duration: 2000
       }).showToast();
+    },
+    downloadImg(){
+      const link = document.querySelector('#download')
+      if (link) {
+        link.click()
+      }
+      console.log(222);
     },
     handleSubmit() {
       this.toggleLoading(true)
