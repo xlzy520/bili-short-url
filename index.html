@@ -132,13 +132,18 @@
       }).showToast();
     },
     downloadImg(){
-      fetch('https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/wx.jpeg').then(res=> res.blob()).then(res=> {
+      const isMobile = navigator.userAgent.includes('Mobile')
+      const link = document.querySelector('#download')
+      const originUrl = 'https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/wx.jpeg'
+      if (isMobile) {
+        link.href = originUrl
+        link.click()
+        return
+      }
+      fetch(originUrl).then(res=> res.blob()).then(res=> {
         const url = URL.createObjectURL(res)
-        const link = document.querySelector('#download')
         link.href = url
-        if (link) {
-          link.click()
-        }
+        link.click()
       })
     },
     handleSubmit() {
