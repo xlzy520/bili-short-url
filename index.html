@@ -72,7 +72,7 @@
       </div>
     </div>
     <div class="" @click="downloadImg">
-      <img class="" src="./wx.jpeg"/>
+      <img class="" src="https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/wx.jpeg"/>
       <div class="img-tips">点击保存</div>
     </div>
 
@@ -132,11 +132,14 @@
       }).showToast();
     },
     downloadImg(){
-      const link = document.querySelector('#download')
-      if (link) {
-        link.click()
-      }
-      console.log(222);
+      fetch('https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/wx.jpeg').then(res=> res.blob()).then(res=> {
+        const url = URL.createObjectURL(res)
+        const link = document.querySelector('#download')
+        link.href = url
+        if (link) {
+          link.click()
+        }
+      })
     },
     handleSubmit() {
       this.toggleLoading(true)
