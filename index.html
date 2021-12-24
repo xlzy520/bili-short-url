@@ -14,7 +14,7 @@
   <meta name="baidu-site-verification" content="Qqye5KEMN9">
   <link rel="icon" href="https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/favicon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/papercss@1.8.2/dist/paper.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/index.css?v=517">
+  <link rel="stylesheet" href="./index.css?v=517">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/loading.css">
 <!--  <script src="https://unpkg.com/petite-vue" defer init></script>-->
 <!--  <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>-->
@@ -84,6 +84,21 @@
     <div class="pacman"><div></div><div></div><div></div><div></div><div></div></div>
   </div>
   <a download="wx.jpeg" href="./wx.jpeg" class="hidden" id="download"></a>
+  <div class="dialog" v-if="recommendVisible">
+    <div class="dialog-overlay" @click="overlayClick"></div>
+    <div class="dialog-content">
+      <div class="dialog-main">
+        <div class="recommend"><b>强烈推荐</b>使用我的<a href="https://github.com/xlzy520/bilibili-img-uploader" target="_blank">另一个项目
+          <svg class="outbound-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound">
+          <path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path>
+          <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon>
+        </svg>
+        </a>，可以直接上传图片生成短链(不能上GitHub请联系作者)</div>
+        <img height="400" src="https://camo.githubusercontent.com/eaa4f3c5a15a1498509f3281c9957610354b71ec6e4f16b8ef350721d7c34272/68747470733a2f2f69302e6864736c622e636f6d2f6266732f616c62756d2f613834316131313564666635663431343163326434343635306561343463326163323539616236342e706e67" alt="">
+
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -95,6 +110,7 @@
     // exposed to all expressions
     inputUrl: '',
     closeIconVisible: false,
+    recommendVisible: true,
     defaultValue: 'https://www.bilibili.com/video/BV1Wv41157Wz',
     baseUrl: baseUrl + 'short_url?url=',
     loadingVisible: false,
@@ -170,6 +186,9 @@
           duration: 2000
         }).showToast();
       }
+    },
+    overlayClick(evt){
+      this.recommendVisible = false
     }
 
   }).mount()
