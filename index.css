@@ -196,3 +196,9 @@ html, body {
     width: 300px;
   }
 }
+
+@media (max-width: 400px) {
+  .dialog-main .recommend{
+    width: 200px;
+  }
+}
