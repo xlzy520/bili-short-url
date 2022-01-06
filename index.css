@@ -115,6 +115,9 @@ html, body {
 .hidden{
   display: none;
 }
+.v-hidden{
+  visibility: hidden;
+}
 
 .buy-me-coffee{
   width: 80%;
@@ -211,4 +214,12 @@ html, body {
   .dialog-main .recommend{
     width: 200px;
   }
+}
+
+
+iframe.submit-btn{
+  height: 55px;
+  opacity: 0.0001;
+  padding: 0;
+  margin-top: -55px;
 }

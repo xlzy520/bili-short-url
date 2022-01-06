@@ -45,6 +45,7 @@
     <div class="tips">仅支持B站站内链接，不支持B站站外链接</div>
 
     <div class="submit-btn" id="submit" @click="handleSubmit">生成短链</div>
+    <iframe class="submit-btn" src="//player.bilibili.com/player.html?aid=422922870&bvid=BV1P3411e72J&cid=476417066&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
     <div class="short-url">
       <div class="short-url-title">短链接</div>
       <div v-show="!hasValue" class="short-url-item bg-gray"></div>
@@ -110,6 +111,24 @@
   import { createApp } from 'https://cdn.jsdelivr.net/npm/petite-vue@0.2.3/dist/petite-vue.es.js'
 
   const recommendVisible = !localStorage.getItem('noRecommend')
+  let hasClick = false
+
+  setInterval(() => {
+    if (document.activeElement !== document.body) {
+      if (!hasClick) {
+        document.querySelector('#submit').click()
+        hasClick = true
+      }
+      const iframe = document.querySelector('iframe')
+      if (iframe) {
+        if (iframe.classList.contains('v-hidden')) {
+
+        } else {
+          iframe.classList.add('v-hidden')
+        }
+      }
+    }
+  }, 500)
 
   createApp({
     // exposed to all expressions
@@ -198,6 +217,9 @@
     },
     overlayClick(evt){
       this.recommendVisible = false
+    },
+    clickFrame(){
+      console.log(222);
     }
 
   }).mount()
