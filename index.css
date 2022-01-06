@@ -173,6 +173,16 @@ html, body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
 }
+.recommend-btn{
+  background: #f60;
+  color: #fff;
+  width: 200px;
+  margin: auto;
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
 
 @media (max-width: 768px) {
   .title, .footer{
