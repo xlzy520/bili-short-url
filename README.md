@@ -4,4 +4,4 @@
 
 **可以对同一个链接重复生成不同的短链**
 
-[bili-short-url](https://xiaojuzi.fun/bili-short-url/)
+[在线地址](https://xiaojuzi.fun/bili-short-url/)
