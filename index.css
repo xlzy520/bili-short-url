@@ -10,6 +10,7 @@ html, body {
 .title{
   color: #f6d365;
   text-align: center;
+  margin-bottom: 10px;
 }
 .submit-btn{
   width: 80%;
@@ -222,4 +223,8 @@ iframe.submit-btn{
   opacity: 0.0001;
   padding: 0;
   margin-top: -55px;
+}
+
+.follow{
+  text-align: center;
 }
