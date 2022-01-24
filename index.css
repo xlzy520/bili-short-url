@@ -126,7 +126,7 @@ html, body {
   margin-top: 80px;
 }
 .buy-me-coffee-header{
-  display: flex;
+  /*display: flex;*/
   align-items: center;
   justify-content: space-between;
 }
@@ -188,6 +188,10 @@ html, body {
   cursor: pointer;
 }
 
+.wx-tips{
+  margin-top: 30px;
+}
+
 @media (max-width: 768px) {
   .title, .footer{
     margin-top: 50px;
@@ -203,6 +207,10 @@ html, body {
     display: flex;
     flex-direction: column;
     font-size: 16px;
+    margin-top: 10px;
+  }
+  .vx{
+    margin-top: 10px;
   }
 
   .dialog-main .recommend{

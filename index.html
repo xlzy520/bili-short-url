@@ -50,7 +50,7 @@
     <div class="tips">仅支持B站站内链接，不支持B站站外链接</div>
 
     <div class="submit-btn" id="submit" @click="handleSubmit">生成短链</div>
-    <iframe class="submit-btn" src="//player.bilibili.com/player.html?aid=295402185&bvid=BV1EF411q7GQ&cid=478508728&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+<!--    <iframe class="submit-btn" src="//player.bilibili.com/player.html?aid=295402185&bvid=BV1EF411q7GQ&cid=478508728&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>-->
     <div class="short-url">
       <div class="short-url-title">短链接</div>
       <div v-show="!hasValue" class="short-url-item bg-gray"></div>
@@ -77,10 +77,10 @@
         有问题可以联系微信: <span class="vx" @click="copy('lv1017866168')">lv1017866168（点击复制）</span>
       </div>
     </div>
-    <div class="" @click="downloadImg">
-      <img class="" src="https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/wx.jpeg"/>
-      <div class="img-tips">点击保存</div>
-    </div>
+<!--    <div class="" @click="downloadImg">-->
+<!--      <img class="" src="https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/wx.jpeg"/>-->
+<!--      <div class="img-tips">点击保存</div>-->
+<!--    </div>-->
 
   </div>
   <div class="footer">
@@ -116,24 +116,24 @@
   import { createApp } from 'https://cdn.jsdelivr.net/npm/petite-vue@0.2.3/dist/petite-vue.es.js'
 
   const recommendVisible = !localStorage.getItem('noRecommend')
-  let hasClick = false
+  // let hasClick = false
 
-  setInterval(() => {
-    if (document.activeElement !== document.body) {
-      if (!hasClick) {
-        document.querySelector('#submit').click()
-        hasClick = true
-      }
-      const iframe = document.querySelector('iframe')
-      if (iframe) {
-        if (iframe.classList.contains('v-hidden')) {
-
-        } else {
-          iframe.classList.add('v-hidden')
-        }
-      }
-    }
-  }, 500)
+  // setInterval(() => {
+  //   if (document.activeElement !== document.body) {
+  //     if (!hasClick) {
+  //       document.querySelector('#submit').click()
+  //       hasClick = true
+  //     }
+  //     const iframe = document.querySelector('iframe')
+  //     if (iframe) {
+  //       if (iframe.classList.contains('v-hidden')) {
+  //
+  //       } else {
+  //         iframe.classList.add('v-hidden')
+  //       }
+  //     }
+  //   }
+  // }, 500)
 
   createApp({
     // exposed to all expressions
