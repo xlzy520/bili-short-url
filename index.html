@@ -196,9 +196,18 @@
       })
     },
     handleSubmit() {
-      this.toggleLoading(true)
       let value = this.inputUrl? this.inputUrl : this.defaultValue
+      if (!value.startsWith('http')) {
+        Toastify({
+          text: '请输入http或https链接，如：https://www.bilibili.com/video/BV1Wv41157Wz',
+          position: "center",
+          backgroundColor: "linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%)",
+          duration: 2000
+        }).showToast();
+        return
+      }
       const url = this.baseUrl + encodeURIComponent(value)+'&href='+location.href
+      this.toggleLoading(true)
       fetch(url).then(res => res.json()).then(res => {
         this.handleResults(res, true)
       }).finally(() => {
