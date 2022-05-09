@@ -236,3 +236,10 @@ iframe.submit-btn{
 .follow{
   text-align: center;
 }
+
+.warn-tips{
+  font-weight: bold;
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+}

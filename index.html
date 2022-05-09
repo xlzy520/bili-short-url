@@ -16,8 +16,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/papercss@1.8.2/dist/paper.min.css">
   <link rel="stylesheet" href="./index.css?v=517">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/loading.css">
-<!--  <script src="https://unpkg.com/petite-vue" defer init></script>-->
-<!--  <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>-->
+  <!--  <script src="https://unpkg.com/petite-vue" defer init></script>-->
+  <!--  <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>-->
   <link href="https://cdn.bootcdn.net/ajax/libs/toastify-js/1.10.0/toastify.min.css" rel="stylesheet">
   <script async src="https://cdn.bootcdn.net/ajax/libs/toastify-js/1.10.0/toastify.min.js"></script>
   <script async src="https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/modern-copy.js"></script>
@@ -37,7 +37,7 @@
   <h4 class="title">哔哩哔哩短链生成器</h4>
 
   <div class="follow">
-<!--    <div class="">不知道为啥，我自己做的介绍视频反而被举报下家</div>-->
+    <!--    <div class="">不知道为啥，我自己做的介绍视频反而被举报下家</div>-->
     <a href="https://space.bilibili.com/7560113" class="link">好用的话，还请关注我B站</a>
   </div>
 
@@ -50,7 +50,9 @@
     <div class="tips">仅支持B站站内链接，不支持B站站外链接</div>
 
     <div class="submit-btn" id="submit" @click="handleSubmit">生成短链</div>
-<!--    <iframe class="submit-btn" src="//player.bilibili.com/player.html?aid=295402185&bvid=BV1EF411q7GQ&cid=478508728&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>-->
+
+    <div class="warn-tips">哪位大佬一天调用了两万次请求呀，免费服务器顶不住呀，考虑一下其他小伙伴的使用次数呀。真有大量次数需要，可以联系我吗</div>
+    <!--    <iframe class="submit-btn" src="//player.bilibili.com/player.html?aid=295402185&bvid=BV1EF411q7GQ&cid=478508728&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>-->
     <div class="short-url">
       <div class="short-url-title">短链接</div>
       <div v-show="!hasValue" class="short-url-item bg-gray"></div>
@@ -79,7 +81,7 @@
     </div>
     <div class="" @click="downloadImg">
       <img class="" src="https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/wx.jpeg"/>
-<!--      <div class="img-tips">点击保存</div>-->
+      <!--      <div class="img-tips">点击保存</div>-->
     </div>
 
   </div>
@@ -96,9 +98,9 @@
       <div class="dialog-main">
         <div class="recommend">【图片短链】<b>强烈推荐</b>使用我的<a href="https://github.com/xlzy520/bilibili-img-uploader" target="_blank">另一个项目
           <svg class="outbound-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound">
-          <path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path>
-          <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon>
-        </svg>
+            <path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path>
+            <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon>
+          </svg>
         </a>，可以直接上传图片生成短链(不能上GitHub请<a target="_blank" href="https://gitee.com/xlzy520/bilibili-img-uploader">点这里</a>)
           <div class="recommend-btn" @click="noRecommend">不再提示</div>
         </div>
@@ -111,8 +113,8 @@
 </div>
 
 <script type="module">
-  // const baseUrl = 'http://localhost:5000/'
-  const baseUrl = 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/'
+  const baseUrl = 'http://localhost:5000/'
+  // const baseUrl = 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/'
   import { createApp } from 'https://cdn.jsdelivr.net/npm/petite-vue@0.2.3/dist/petite-vue.es.js'
 
   const recommendVisible = !localStorage.getItem('noRecommend')
