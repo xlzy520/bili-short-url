@@ -6,20 +6,19 @@
   <title>Bilibili短链生成器</title>
   <meta name="keywords" content="b23.tv,b23tv,哔哩哔哩,哔哩哔哩短链,短链接, bilibili, 短链生成,b站短链,b站怎么生产那个btv23短链接？">
   <meta name="description" content="生成b23.tv格式的短链，b站怎么生产那个btv23短链接">
-  <link href="https://cdn.bootcss.com" rel="dns-prefetch">
-  <link href="https://cdn.jsdelivr.net" rel="dns-prefetch">
+  <link href="https://cdnjs.loli.net" rel="dns-prefetch">
   <link href="https://fonts.googleapis.com" rel="dns-prefetch">
   <link href="https://fonts.gstatic.com" rel="dns-prefetch">
   <script async src="https://hm.baidu.com/hm.js?308d8313ec16f721670ef77465d6aff6"></script>
   <meta name="baidu-site-verification" content="Qqye5KEMN9">
   <link rel="icon" href="./favicon.png">
-  <link rel="stylesheet" href="https://unpkg.com/papercss@1.8.3/dist/paper.min.css">
+  <link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/paper-css/0.4.1/paper.min.css">
   <link rel="stylesheet" href="./index.css?v=517">
   <link rel="stylesheet" href="./loading.css">
   <!--  <script src="https://unpkg.com/petite-vue" defer init></script>-->
   <!--  <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>-->
-  <link href="https://cdn.bootcdn.net/ajax/libs/toastify-js/1.10.0/toastify.min.css" rel="stylesheet">
-  <script async src="https://cdn.bootcdn.net/ajax/libs/toastify-js/1.10.0/toastify.min.js"></script>
+  <link href="https://cdnjs.loli.net/ajax/libs/toastify-js/1.11.2/toastify.min.css" rel="stylesheet">
+  <script async src="https://cdnjs.loli.net/ajax/libs/toastify-js/1.11.2/toastify.min.js"></script>
   <script async src="./modern-copy.js"></script>
   <script>
     var _hmt = _hmt || [];
@@ -80,7 +79,7 @@
       </div>
     </div>
     <div class="" @click="downloadImg">
-      <img class="" src="https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/wx.jpeg"/>
+      <img class="" src="./wx.jpeg"/>
       <!--      <div class="img-tips">点击保存</div>-->
     </div>
 
@@ -115,7 +114,7 @@
 <script type="module">
   // const baseUrl = 'http://localhost:5000/'
   const baseUrl = 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/'
-  import { createApp } from 'https://cdn.bootcdn.net/ajax/libs/petite-vue/0.4.1/petite-vue.es.min.js'
+  import { createApp } from 'https://unpkg.com/browse/petite-vue@0.4.1/dist/petite-vue.es.js'
 
   const recommendVisible = !localStorage.getItem('noRecommend')
   // let hasClick = false
