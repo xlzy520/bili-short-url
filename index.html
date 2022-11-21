@@ -12,7 +12,7 @@
   <script async src="https://hm.baidu.com/hm.js?308d8313ec16f721670ef77465d6aff6"></script>
   <meta name="baidu-site-verification" content="Qqye5KEMN9">
   <link rel="icon" href="./favicon.png">
-  <link rel="stylesheet" href="https://unpkg.com/papercss/dist/paper.min.css">
+  <link rel="stylesheet" href="./paper.min.css">
   <link rel="stylesheet" href="./index.css?v=517">
   <link rel="stylesheet" href="./loading.css">
   <!--  <script src="https://unpkg.com/petite-vue" defer init></script>-->
@@ -50,7 +50,7 @@
 
     <div class="submit-btn" id="submit" @click="handleSubmit">生成短链</div>
 
-    <div class="warn-tips">哪位大佬一天调用了两万次请求呀，免费服务器顶不住呀，考虑一下其他小伙伴的使用次数呀。真有大量次数需要，可以联系我吗</div>
+    <div class="warn-tips">生成能转短链的链接请滴滴</div>
     <!--    <iframe class="submit-btn" src="//player.bilibili.com/player.html?aid=295402185&bvid=BV1EF411q7GQ&cid=478508728&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>-->
     <div class="short-url">
       <div class="short-url-title">短链接</div>
@@ -79,7 +79,7 @@
       </div>
     </div>
     <div class="" @click="downloadImg">
-      <img class="" src="./wx.jpeg"/>
+      <img class="" src="https://zhibi-common.oss-cn-shanghai.aliyuncs.com/wx.jpeg"/>
       <!--      <div class="img-tips">点击保存</div>-->
     </div>
 
@@ -90,7 +90,7 @@
     <div class="mask"></div>
     <div class="pacman"><div></div><div></div><div></div><div></div><div></div></div>
   </div>
-  <a download="wx.jpeg" href="./wx.jpeg" class="hidden" id="download"></a>
+  <a download="wx.jpeg" href="https://zhibi-common.oss-cn-shanghai.aliyuncs.com/wx.jpeg" class="hidden" id="download"></a>
   <div class="dialog" v-if="recommendVisible">
     <div class="dialog-overlay" @click="overlayClick"></div>
     <div class="dialog-content">
@@ -140,7 +140,7 @@
     // exposed to all expressions
     inputUrl: '',
     closeIconVisible: false,
-    recommendVisible,
+    recommendVisible: false,
     defaultValue: 'https://www.bilibili.com/video/BV1Wv41157Wz',
     baseUrl: baseUrl + 'short_url?url=',
     loadingVisible: false,
