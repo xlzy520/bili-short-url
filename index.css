@@ -26,6 +26,14 @@ html, body {
   color: #fff;
 }
 
+.ad{
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #ff5c53;
+}
+
 .tips{
   margin-top: 10px;
   font-size: 12px;
