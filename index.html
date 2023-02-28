@@ -13,13 +13,9 @@
   <meta name="baidu-site-verification" content="Qqye5KEMN9">
   <link rel="icon" href="./favicon.png">
   <link rel="stylesheet" href="./paper.min.css">
-  <link rel="stylesheet" href="./index.css?v=517">
-  <link rel="stylesheet" href="./loading.css">
-  <!--  <script src="https://unpkg.com/petite-vue" defer init></script>-->
-  <!--  <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>-->
+  <link rel="stylesheet" href="./index.css?v=222">
   <link href="https://cdnjs.loli.net/ajax/libs/toastify-js/1.11.2/toastify.min.css" rel="stylesheet">
   <script async src="https://cdnjs.loli.net/ajax/libs/toastify-js/1.11.2/toastify.min.js"></script>
-  <script async src="./modern-copy.js"></script>
   <script>
     var _hmt = _hmt || [];
     (function() {
@@ -115,29 +111,9 @@
 </div>
 
 <script type="module">
-  // const baseUrl = 'http://localhost:5000/'
-  const baseUrl = 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/'
+  const baseUrl = 'http://localhost:5000/'
+  // const baseUrl = 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/'
   import { createApp } from 'https://cdnjs.loli.net/ajax/libs/petite-vue/0.4.1/petite-vue.es.js'
-
-  const recommendVisible = !localStorage.getItem('noRecommend')
-  // let hasClick = false
-
-  // setInterval(() => {
-  //   if (document.activeElement !== document.body) {
-  //     if (!hasClick) {
-  //       document.querySelector('#submit').click()
-  //       hasClick = true
-  //     }
-  //     const iframe = document.querySelector('iframe')
-  //     if (iframe) {
-  //       if (iframe.classList.contains('v-hidden')) {
-  //
-  //       } else {
-  //         iframe.classList.add('v-hidden')
-  //       }
-  //     }
-  //   }
-  // }, 500)
 
   createApp({
     // exposed to all expressions
@@ -176,8 +152,11 @@
     toggleLoading(show) {
       this.loadingVisible = !!show;
     },
+    copyText(text){
+      return navigator.clipboard.writeText(text)
+    },
     copy(url){
-      mcopy(url)
+      this.copyText(url)
       Toastify({
         text: "复制成功",
         position: "center",
