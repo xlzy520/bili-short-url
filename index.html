@@ -111,8 +111,8 @@
 </div>
 
 <script type="module">
-  const baseUrl = 'http://localhost:5000/'
-  // const baseUrl = 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/'
+  const isDev = location.hostname === 'localhost';
+  const baseUrl = isDev ? 'http://localhost:5000/' : 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/';
   import { createApp } from 'https://cdnjs.loli.net/ajax/libs/petite-vue/0.4.1/petite-vue.es.js'
 
   createApp({
