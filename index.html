@@ -11,6 +11,7 @@
   <link href="https://fonts.gstatic.com" rel="dns-prefetch">
   <script async src="https://hm.baidu.com/hm.js?308d8313ec16f721670ef77465d6aff6"></script>
   <meta name="baidu-site-verification" content="Qqye5KEMN9">
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.0/vue.min.js"></script>
   <link rel="icon" href="./favicon.png">
   <link rel="stylesheet" href="./paper.min.css">
   <link rel="stylesheet" href="./index.css?v=222">
@@ -41,8 +42,7 @@
 
   <div class="form">
     <div class="origin-url-input">
-      <input id="origin_url" type="url" name="origin_url" v-model="inputUrl" @input="inputUrlChange"
-             placeholder="https://www.bilibili.com/video/BV1Wv41157Wz">
+      <input id="origin_url" type="url" name="origin_url" v-model="inputUrl" @input="inputUrlChange" :placeholder="defaultValue">
       <svg class="close-icon" v-show="closeIconVisible" @click="clearInput" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z" fill="currentColor"></path></svg>
     </div>
     <div class="tips">仅支持B站站内链接，不支持B站站外链接</div>
@@ -110,117 +110,113 @@
 
 </div>
 
-<script type="module">
+<script>
   const isDev = location.hostname === 'localhost';
   const baseUrl = isDev ? 'http://localhost:5000/' : 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/';
-  import { createApp } from 'https://cdn.bootcdn.net/ajax/libs/petite-vue/0.4.1/petite-vue.es.js'
 
-  createApp({
-    // exposed to all expressions
-    inputUrl: '',
-    closeIconVisible: false,
-    recommendVisible: false,
-    defaultValue: 'https://www.bilibili.com/video/BV1Wv41157Wz',
-    baseUrl: baseUrl + 'short_url?url=',
-    loadingVisible: false,
-    limit: 1,
-    list: [],
-    wechatAccount: 'lv1017866168',
-    // getters
-    get hasValue() {
-      return this.list.length > 0
+  new Vue({
+    el: '#app',
+    data: {
+      inputUrl: '',
+      closeIconVisible: false,
+      recommendVisible: false,
+      defaultValue: 'https://www.bilibili.com/video/BV1Q24y1i7Cu',
+      baseUrl: baseUrl + 'short_url?url=',
+      loadingVisible: false,
+      limit: 1,
+      list: [],
+      wechatAccount: 'lv1017866168'
     },
-    // methods
-    noRecommend(){
-      this.recommendVisible = false
-      localStorage.setItem('noRecommend', 'true')
-    },
-    inputUrlChange(evt){
-      const value = evt.target.value
-      this.toggleCloseIcon(value)
-    },
-    // 清空输入框
-    clearInput(){
-      this.inputUrl = ''
-      this.closeIconVisible = false;
-    },
-    // 控制输入框的关闭图标显示与隐藏的方法
-    toggleCloseIcon(value) {
-      this.closeIconVisible = !!value;
-    },
-    // 控制loading状态显示与隐藏的方法
-    toggleLoading(show) {
-      this.loadingVisible = !!show;
-    },
-    copyText(text){
-      return navigator.clipboard.writeText(text)
-    },
-    copy(url){
-      this.copyText(url)
-      Toastify({
-        text: "复制成功",
-        position: "center",
-        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-        duration: 2000
-      }).showToast();
-    },
-    downloadImg(){
-      const isMobile = navigator.userAgent.includes('Mobile')
-      const link = document.querySelector('#download')
-      const originUrl = 'https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/wx.jpeg'
-      if (isMobile) {
-        link.href = originUrl
-        link.click()
-        return
+    computed: {
+      hasValue() {
+        return this.list.length > 0
       }
-      fetch(originUrl).then(res=> res.blob()).then(res=> {
-        const url = URL.createObjectURL(res)
-        link.href = url
-        link.click()
-      })
     },
-    handleSubmit() {
-      let value = this.inputUrl? this.inputUrl : this.defaultValue
-      if (!value.startsWith('http')) {
+    methods: {
+      noRecommend() {
+        this.recommendVisible = false
+        localStorage.setItem('noRecommend', 'true')
+      },
+      inputUrlChange(evt) {
+        const value = evt.target.value
+        this.toggleCloseIcon(value)
+      },
+      clearInput() {
+        this.inputUrl = ''
+        this.closeIconVisible = false;
+      },
+      toggleCloseIcon(value) {
+        this.closeIconVisible = !!value;
+      },
+      toggleLoading(show) {
+        this.loadingVisible = !!show;
+      },
+      copyText(text) {
+        return navigator.clipboard.writeText(text)
+      },
+      copy(url) {
+        this.copyText(url)
         Toastify({
-          text: '请输入http或https链接，如：https://www.bilibili.com/video/BV1Wv41157Wz',
+          text: "复制成功",
           position: "center",
-          backgroundColor: "linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%)",
+          backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
           duration: 2000
         }).showToast();
-        return
-      }
-      const url = this.baseUrl + encodeURIComponent(value)+'&href='+location.href
-      this.toggleLoading(true)
-      fetch(url).then(res => res.json()).then(res => {
-        this.handleResults(res, true)
-      }).finally(() => {
-        this.toggleLoading(false)
-      })
-    },
-    handleResults(res, autoCopy = true) {
-      if (res.success) {
-        this.list.push({ url: res.short_url })
-        if (autoCopy) {
-          this.copy(res.short_url)
+      },
+      downloadImg() {
+        const isMobile = navigator.userAgent.includes('Mobile')
+        const link = document.querySelector('#download')
+        const originUrl = 'https://cdn.jsdelivr.net/gh/xlzy520/bili-short-url/wx.jpeg'
+        if (isMobile) {
+          link.href = originUrl
+          link.click()
+          return
         }
-      } else {
-        Toastify({
-          text: res.msg,
-          position: "center",
-          backgroundColor: "linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%)",
-          duration: 2000
-        }).showToast();
-      }
-    },
-    overlayClick(evt){
-      this.recommendVisible = false
-    },
-    clickFrame(){
-      console.log(222);
+        fetch(originUrl).then(res => res.blob()).then(res => {
+          const url = URL.createObjectURL(res)
+          link.href = url
+          link.click()
+        })
+      },
+      handleSubmit() {
+        let value = this.inputUrl ? this.inputUrl : this.defaultValue
+        if (!value.startsWith('http')) {
+          Toastify({
+            text: '请输入http或https链接，如：' + this.defaultValue,
+            position: "center",
+            backgroundColor: "linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%)",
+            duration: 2000
+          }).showToast();
+          return
+        }
+        const url = this.baseUrl + encodeURIComponent(value) + '&href=' + location.href
+        this.toggleLoading(true)
+        fetch(url).then(res => res.json()).then(res => {
+          this.handleResults(res, true)
+        }).finally(() => {
+          this.toggleLoading(false)
+        })
+      },
+      handleResults(res, autoCopy = true) {
+        if (res.success) {
+          this.list.push({ url: res.short_url })
+          if (autoCopy) {
+            this.copy(res.short_url)
+          }
+        } else {
+          Toastify({
+            text: res.msg,
+            position: "center",
+            backgroundColor: "linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%)",
+            duration: 2000
+          }).showToast();
+        }
+      },
+      overlayClick(evt) {
+        this.recommendVisible = false
+      },
     }
-
-  }).mount()
+  });
 </script>
 
 </body>
