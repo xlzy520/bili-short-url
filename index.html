@@ -191,7 +191,13 @@
         }
         const url = this.baseUrl + encodeURIComponent(value) + '&href=' + location.href
         this.toggleLoading(true)
-        fetch(url).then(res => res.json()).then(res => {
+        fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'referer': document.referrer
+          }
+        }).then(res => res.json()).then(res => {
           this.handleResults(res, true)
         }).finally(() => {
           this.toggleLoading(false)
