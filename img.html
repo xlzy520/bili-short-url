@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer" />
+    <title>图片</title>
+    <style>
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="" alt="" />
+    <script>
+      const search = location.search;
+      const params = search.split('zzzz');
+      const u = params[0].replace('?', '');
+      const expires = params[1];
+      if (expires) {
+        const now = new Date().getTime();
+        if (now > expires) {
+          window.location.href = 'https://www.bilibili.com';
+        }
+      }
+      const img = document.querySelector('img');
+      img.src = `https://article.biliimg.com/bfs/article/${u}.png`;
+    </script>
+  </body>
+</html>
