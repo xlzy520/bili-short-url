@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.0/vue.min.js"></script>
+    <!--    <script src="https://cdn.bootcdn.net/ajax/libs/vConsole/3.15.0/vconsole.min.js"></script>-->
+    <title>Index</title>
+    <style>
+      .my-bottom {
+        position: fixed;
+        width: 100%;
+        height: 0;
+        z-index: 1000;
+        bottom: 60px;
+      }
+      .my-layout {
+        position: absolute;
+        z-index: 1000;
+        width: 90%;
+        height: 44px;
+        bottom: 9px;
+        left: 14px;
+        margin-bottom: 0px;
+      }
+      .animation-breath {
+        animation: breath 1.3s cubic-bezier(0.33, 0.39, 0.67, 1) infinite !important;
+      }
+      .weixin-button-large-wrap {
+        overflow: hidden;
+        cursor: pointer;
+        border: 1px solid #1aad19;
+      }
+      .weixin-button-large-wrap {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 4px;
+        border-width: 1px;
+        font-size: 16px;
+        background-color: rgb(26, 173, 25);
+        border-color: rgb(26, 173, 25);
+        color: rgb(255, 255, 255);
+        animation: 0s ease 0s 1 normal none running breath;
+      }
+      @keyframes breath {
+        0% {
+          transform: scale(1);
+        }
+
+        26.7% {
+          transform: scale(1.07);
+        }
+
+        50% {
+          transform: scale(1);
+        }
+
+        76.7% {
+          transform: scale(1.02);
+        }
+
+        to {
+          transform: scale(1);
+        }
+      }
+      .inner-wrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .img {
+        width: 100%;
+        height: 100%;
+      }
+      .mt-200 {
+        margin-top: 200px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 100%;
+        height: 100%;
+        min-height: 100vh;
+        overflow: auto;
+      }
+      .wx-tips {
+        position: absolute;
+        right: 1rem;
+        top: 0;
+        color: red;
+      }
+      .text-center {
+        text-align: center;
+      }
+      .fix-bottom {
+        position: fixed;
+        bottom: 5px;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <svg
+        class="wx-tips"
+        v-if="showOpenTips"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        width="300"
+        height="152"
+        viewBox="0 0 300 152"
+      >
+        <defs>
+          <path id="a" d="M.666.734h103v129h-103z" />
+        </defs>
+        <g fill="none" fill-rule="evenodd">
+          <g transform="translate(201 -4)">
+            <mask id="b" fill="#fff">
+              <use xlink:href="#a" />
+            </mask>
+            <g mask="url(#b)">
+              <path
+                fill="#338FE5"
+                d="M-329.591-111.78a192.812 192.812 0 0 0 3.433-3.763l.64.565c-.013.015-1.339 1.518-3.45 3.78l-.623-.582zm-7.09 7.292a233.095 233.095 0 0 0 3.582-3.61l.612.596a246.302 246.302 0 0 1-3.594 3.622l-.6-.608zm-31.125 8.208c-1.527-.455-3.17-.641-4.879-.552l-.044-.851c1.807-.095 3.545.102 5.167.585l-.244.818zm-14.757 1.566c1.613-.843 3.211-1.518 4.747-2.005l.258.813c-1.49.472-3.04 1.127-4.61 1.949l-.395-.757zm38.453-2.845c1.209-1.053 2.475-2.2 3.766-3.407l.583.623a147.967 147.967 0 0 1-3.788 3.427l-.56-.643zm-42.022 10.555c-1.04-.69-1.637-1.471-1.772-2.32-.134-.85.2-1.7.99-2.53l.62.59c-.599.626-.857 1.234-.766 1.806.094.595.579 1.198 1.4 1.743l-.472.711zm26.115-3.484c-1.028-1.41-2.182-2.607-3.43-3.558l.517-.679c1.314 1 2.526 2.257 3.602 3.734l-.689.503zm7.924-.848a60.968 60.968 0 0 0 4.086-2.979l.528.67a62.264 62.264 0 0 1-4.143 3.021l-.47-.712zm-24.054 6.853c-1.838-.106-3.556-.332-5.107-.673l.183-.833c1.508.33 3.181.55 4.973.654l-.049.852zm14.98-2.625a36.628 36.628 0 0 0 4.698-1.779l.357.775a37.617 37.617 0 0 1-4.807 1.82l-.248-.816zm-9.844 2.61l-.053-.853a45.481 45.481 0 0 0 5.001-.591l.148.84a45.87 45.87 0 0 1-5.096.603zm15.167 3.061a33.858 33.858 0 0 0-1.694-4.723l.778-.35a34.928 34.928 0 0 1 1.738 4.843l-.822.23zm1.646 9.933a56.23 56.23 0 0 0-.546-4.842l-.027-.17.843-.14.028.177c.249 1.572.435 3.226.553 4.916l-.85.06zm-.044 10.104c.124-1.709.192-3.41.201-5.053l.853.005a77.197 77.197 0 0 1-.202 5.11l-.852-.062zm-1.31 10.035c.313-1.67.581-3.351.798-5l.845.111a94.304 94.304 0 0 1-.804 5.046l-.839-.157zm-2.352 9.851c.473-1.627.909-3.275 1.297-4.896l.83.197a109.56 109.56 0 0 1-1.308 4.937l-.82-.238zm-3.265 9.59a114.4 114.4 0 0 0 1.74-4.757l.807.274a115.565 115.565 0 0 1-1.752 4.794l-.795-.31zm-3.315 9.649l-.771-.366.645-1.357a119.937 119.937 0 0 0 1.494-3.247l.78.346c-.48 1.087-.987 2.187-1.504 3.27l-.644 1.354zm-4.954 8.933c.64-1.523 1.307-3.052 2.04-4.675l.777.352a187.07 187.07 0 0 0-2.03 4.654l-.787-.33zm-3.664 9.521a154.577 154.577 0 0 1 1.756-4.79l.797.306a153.886 153.886 0 0 0-1.747 4.764l-.806-.28zm-2.994 9.757c.43-1.62.902-3.271 1.405-4.907l.816.25c-.5 1.627-.97 3.267-1.396 4.875l-.825-.218zm-2.2 9.969a116.5 116.5 0 0 1 .992-5.009l.833.185c-.366 1.657-.697 3.33-.984 4.97l-.841-.146zm-1.278 10.13c.128-1.674.302-3.384.517-5.081l.846.108a102.552 102.552 0 0 0-.513 5.037l-.85-.064zm-.238 10.21a93.332 93.332 0 0 1-.018-5.109l.853.02a92.92 92.92 0 0 0 .018 5.063l-.853.026zm.899 10.175a87.95 87.95 0 0 1-.597-5.074l.85-.075c.148 1.68.347 3.37.59 5.026l-.843.123zm2.09 10.002a85.152 85.152 0 0 1-1.195-4.97l.834-.174a84.028 84.028 0 0 0 1.184 4.92l-.823.224zm3.274 9.677a86.6 86.6 0 0 1-1.783-4.789l.808-.274a84.992 84.992 0 0 0 1.766 4.741l-.79.322zm4.393 9.222a90.218 90.218 0 0 1-2.33-4.548l.77-.366a89.569 89.569 0 0 0 2.308 4.504l-.748.41zM71.998 12.389c.91-1.347 3.31-5.082 4.203-6.568l.731.438c-.9 1.5-3.309 5.248-4.227 6.608l-.707-.478zm-435.764 71.605a96.867 96.867 0 0 1-2.81-4.264l.723-.451a97.005 97.005 0 0 0 2.787 4.227l-.7.488zM46.959 19.667c-.854-.177-1.666-.215-2.415-.113l-.173.025c-.809.128-1.48.37-1.991.72l-.481-.705c.617-.422 1.404-.71 2.338-.859l.193-.028c.844-.113 1.753-.073 2.702.125l-.173.835zm20.314-1.618a60.75 60.75 0 0 0 3.252-3.86l.674.522a61.386 61.386 0 0 1-3.299 3.916l-.627-.578zm-12.038 6.815c-1.228-1.28-2.508-2.362-3.802-3.22l.47-.71c1.348.89 2.675 2.014 3.947 3.34l-.615.59zm4.437-.27a33.68 33.68 0 0 0 4.004-3.021l.56.643a34.481 34.481 0 0 1-4.105 3.098l-.46-.72zm-14.393 3.354c-1.82-.717-3.29-1.878-4.136-3.268l.729-.445c.75 1.234 2.07 2.27 3.72 2.919l-.313.794zm-402.8 64.12a109.048 109.048 0 0 1-3.22-3.96l.675-.523c1.02 1.318 2.096 2.64 3.195 3.93l-.65.554zm409.556-63.5c-.53.085-1.065.14-1.59.166l-.044-.851c.501-.025.998-.068 1.52-.161a17.4 17.4 0 0 0 3.305-.88l.296.8a18.171 18.171 0 0 1-3.467.923l-.02.004zm8.92 4.512a37.887 37.887 0 0 0-2.563-4.322l.702-.485a38.655 38.655 0 0 1 2.622 4.422l-.761.385zm-411.52 66.454a122.38 122.38 0 0 1-3.557-3.657l.624-.582a121.418 121.418 0 0 0 3.533 3.632l-.6.607zm7.534 6.877a140.745 140.745 0 0 1-3.83-3.368l.573-.63c1.23 1.12 2.51 2.246 3.81 3.345l-.553.653zM64.45 42.51a47.718 47.718 0 0 0-1.484-4.814l.8-.296a48.491 48.491 0 0 1 1.512 4.902l-.827.208zm-399.3 70.027c-1.456-.978-2.86-1.97-4.173-2.95l.511-.684c1.302.971 2.694 1.955 4.138 2.926l-.476.708zM65.954 52.473a55.652 55.652 0 0 0-.518-5.02l.845-.126c.248 1.664.425 3.378.525 5.097l-.852.049zm-392.117 65.423a151.221 151.221 0 0 1-4.393-2.598l.447-.727c1.4.86 2.87 1.73 4.368 2.583l-.422.742zm9.008 4.784c-1.54-.765-3.066-1.55-4.537-2.33l.4-.753a189.89 189.89 0 0 0 4.517 2.319l-.38.764zM65.693 62.56c.18-1.692.292-3.388.336-5.04l.853.024a64.921 64.921 0 0 1-.34 5.106l-.85-.09zm-373.614 64.446a226.555 226.555 0 0 1-4.64-2.11l.36-.773c1.5.702 3.055 1.409 4.624 2.103l-.344.78zm371.832-54.5a74.668 74.668 0 0 0 1.065-4.943l.84.152a75.744 75.744 0 0 1-1.078 4.998l-.827-.207zm-362.43 58.436a273.215 273.215 0 0 1-4.72-1.923l.328-.787c1.543.645 3.111 1.284 4.706 1.917l-.314.793zm9.537 3.593a309.256 309.256 0 0 1-4.784-1.756l.3-.799a303.69 303.69 0 0 0 4.77 1.751l-.286.804zm349.84-52.388a87.535 87.535 0 0 0 1.67-4.777l.813.259a88.976 88.976 0 0 1-1.687 4.823l-.796-.305zm-340.194 55.667a324.36 324.36 0 0 1-4.835-1.602l.273-.808c1.59.54 3.197 1.073 4.823 1.597l-.26.813zm240.364-36.773c-1.599-.69-3.173-.94-4.551-.72l-.163.027-.154-.84.183-.03c1.538-.244 3.275.026 5.024.78l-.339.783zm-230.624 39.762c-1.643-.479-3.27-.965-4.88-1.46l.25-.815c1.606.493 3.23.979 4.869 1.456l-.239.819zm220.338-33.043a4.605 4.605 0 0 1-.108-.498 3.54 3.54 0 0 1 .005-1.195c.248-1.348.663-2.52 1.234-3.483l.734.435c-.52.876-.9 1.953-1.129 3.202a2.693 2.693 0 0 0-.001.908c.02.132.051.268.088.405l-.823.226zM56.759 91.405c.764-1.52 1.493-3.06 2.167-4.578l.78.346c-.68 1.53-1.415 3.083-2.185 4.615l-.762-.383zm-316.536 52.11a365.887 365.887 0 0 1-4.919-1.321l.227-.823c1.622.448 3.258.888 4.907 1.318l-.215.827zm227.798-35.768a14.87 14.87 0 0 0-2.93-3.953l.593-.615a15.744 15.744 0 0 1 3.099 4.183l-.762.385zm-217.91 38.214a370.466 370.466 0 0 1-4.952-1.19l.205-.828c1.635.404 3.281.8 4.941 1.187l-.193.83zm207.52-30.555c-1.56-1.106-2.895-2.212-3.972-3.289l.604-.603c1.042 1.042 2.341 2.117 3.861 3.196l-.493.696zm94.18-15.162c.895-1.45 1.759-2.919 2.57-4.367l.745.416a123.49 123.49 0 0 1-2.588 4.4l-.726-.45zm-291.75 47.903a384.668 384.668 0 0 1-4.982-1.06l.183-.834c1.646.362 3.304.715 4.97 1.058l-.17.836zm208.616-30.88c.57-1.568.798-3.19.677-4.82l.852-.062a12.384 12.384 0 0 1-.728 5.174l-.801-.292zm-198.615 32.808a406.143 406.143 0 0 1-5.007-.932l.162-.837c1.656.319 3.322.629 4.997.929l-.152.84zm196.453-29.572a67.994 67.994 0 0 1-4.548-2.354l.422-.741a68.087 68.087 0 0 0 4.49 2.323l-.364.772zm79.418-12.054a60.896 60.896 0 0 0 3.1-3.982l.694.495c-1 1.4-2.057 2.759-3.144 4.04l-.65-.553zm-265.824 43.295a395.28 395.28 0 0 1-5.029-.802l.14-.842c1.666.277 3.338.544 5.018.8l-.129.844zm182.474-26.816c1.416-1.079 2.63-2.229 3.613-3.42l.659.544c-1.025 1.24-2.288 2.437-3.754 3.555l-.518-.679zm-172.387 28.227c-1.688-.214-3.37-.439-5.047-.673l.117-.845c1.674.234 3.353.458 5.038.673l-.108.845zm185.823-28.882a86.013 86.013 0 0 1-4.809-1.737l.314-.794a84.616 84.616 0 0 0 4.761 1.72l-.266.811zm62.727-8.76a53.71 53.71 0 0 0 3.755-3.366l.6.609a54.736 54.736 0 0 1-3.815 3.419l-.54-.661zm-238.429 38.791c-1.694-.17-3.381-.35-5.064-.54l.096-.85c1.678.192 3.363.371 5.052.54l-.084.85zm153.561-24.293a190.808 190.808 0 0 0 4.482-2.378l.41.748a186.06 186.06 0 0 1-4.503 2.388l-.389-.758zm32.02-3.112a87.72 87.72 0 0 1-4.977-1.17l.219-.824a87.67 87.67 0 0 0 4.928 1.158l-.17.836zm-175.435 28.284c-1.695-.124-3.388-.26-5.075-.405l.073-.85c1.685.146 3.373.28 5.064.404l-.062.851zm134.27-20.778a201.36 201.36 0 0 0 4.6-2.138l.37.769a195.911 195.911 0 0 1-4.622 2.147l-.349-.778zm85.628-13.313a51.589 51.589 0 0 0 4.328-2.586l.473.71a52.498 52.498 0 0 1-4.399 2.629l-.402-.753zM-179.4 155.787a363.737 363.737 0 0 1-5.07-.266l.05-.852c1.683.1 3.37.189 5.059.266l-.039.852zm175.418-27.445a82.337 82.337 0 0 1-5.082-.567l.121-.845c1.68.24 3.372.43 5.029.562l-.068.85zm-60.644 9.99a203.6 203.6 0 0 0 4.704-1.906l.33.786a206.833 206.833 0 0 1-4.723 1.915l-.31-.796zm85.693-13.362a54.715 54.715 0 0 0 4.74-1.72l.328.787a56.213 56.213 0 0 1-4.813 1.748l-.255-.815zm-190.309 31.139c-1.696-.03-3.39-.07-5.081-.124l.028-.854c1.687.055 3.376.096 5.068.126l-.015.852zm175.482-27.64c-1.68.098-3.4.135-5.114.112l.012-.853a71.04 71.04 0 0 0 5.053-.11l.049.852zm5.092-.486l-.114-.846a62.318 62.318 0 0 0 4.97-.875l.184.834a62.848 62.848 0 0 1-5.04.887zm-85.496 13.82a221.189 221.189 0 0 0 4.79-1.68l.292.803a223.563 223.563 0 0 1-4.809 1.686l-.273-.809zm-84.906 14.335c-1.696.021-3.392.028-5.086.024l.001-.854c1.69.006 3.382-.002 5.074-.023l.01.853zm10.175-.274c-1.696.073-3.39.131-5.087.177l-.023-.853c1.691-.045 3.383-.103 5.073-.177l.037.853zm65.043-11.029c1.62-.468 3.254-.96 4.86-1.462l.255.814a233.16 233.16 0 0 1-4.878 1.468l-.237-.82zm-54.874 10.438c-1.693.127-3.388.239-5.082.337l-.05-.852c1.69-.098 3.38-.21 5.068-.336l.064.851zm45.062-7.828c1.66-.405 3.315-.827 4.919-1.253l.22.826c-1.61.426-3.271.85-4.937 1.256l-.202-.83zm-34.913 6.903c-1.688.184-3.38.351-5.071.505l-.078-.849a300.17 300.17 0 0 0 5.057-.504l.092.848zm25.002-4.7c1.675-.338 3.346-.692 4.967-1.052l.185.833a254.24 254.24 0 0 1-4.983 1.056l-.17-.836zm-14.89 3.43c-1.678.242-3.362.468-5.048.68l-.106-.846c1.68-.212 3.36-.437 5.034-.679l.12.845zm4.898-1.613c1.672-.272 3.34-.56 5.004-.862l.153.84c-1.67.304-3.343.592-5.02.864l-.137-.842z"
+              />
+              <path stroke="#338FE5" d="M68.246 7.732l8.663-2.304.33 10.025" />
+            </g>
+          </g>
+          <g
+            fill="#ff001c"
+            font-family="PingFangSC-Medium, PingFang SC"
+            font-size="18"
+            font-weight="400"
+          >
+            <text transform="translate(0 101)">
+              <tspan x="0" y="16">1. 请先点击右上角更多“…”</tspan>
+            </text>
+            <text transform="translate(0 133)">
+              <tspan x="0" y="16">2. 选择使用“浏览器”打开加入QQ群</tspan>
+            </text>
+          </g>
+        </g>
+      </svg>
+
+      <img :src="imgUrl" class="img" :class="showOpenTips? 'mt-200': ''" />
+      <div class="my-bottom" v-if="showBtn">
+        <div class="my-layout">
+          <div class="weixin-button-large-wrap animation-breath">
+            <div style="width: 100%; height: 100%">
+              <div class="inner-wrapper" @click="copy">
+                <div data-v-6cb6cfd2="" class="text">{{text}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--      <div class="" @click="openWX">测试微信</div>-->
+      <div
+        class="text-center fix-bottom"
+        @click="copyTextToClipboard('appl532978')"
+      >
+        制作人vx：appl532978
+      </div>
+      <!--      {{test}}-->
+    </div>
+    <script>
+      function copyTextToClipboard(input) {
+        var el = document.createElement('textarea');
+
+        el.value = input;
+
+        // Prevent keyboard from showing on mobile
+        el.setAttribute('readonly', '');
+
+        el.style.contain = 'strict';
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        el.style.fontSize = '12pt'; // Prevent zooming on iOS
+
+        var selection = getSelection();
+        var originalRange = false;
+        if (selection.rangeCount > 0) {
+          originalRange = selection.getRangeAt(0);
+        }
+
+        document.body.appendChild(el);
+        el.select();
+
+        // Explicit selection workaround for iOS
+        el.selectionStart = 0;
+        el.selectionEnd = input.length;
+
+        var success = false;
+        try {
+          success = document.execCommand('copy');
+        } catch (err) {}
+
+        document.body.removeChild(el);
+
+        if (originalRange) {
+          selection.removeAllRanges();
+          selection.addRange(originalRange);
+        }
+
+        return success;
+      }
+    </script>
+
+    <!--    <script src="https://s1.hdslb.com/bfs/static/cm/tetris/js/chunk-vendors.c8944032.js"></script>-->
+    <!--    <script src="https://s1.hdslb.com/bfs/static/cm/tetris/js/chunk-common.7d5336b7.js"></script>-->
+    <!--    <script src="https://s1.hdslb.com/bfs/static/cm/tetris/js/page.f854c025.js"></script>-->
+    <script>
+      // const test =
+      //   'https://my-bucket-ow740kk-1253419200.cos-website.ap-guangzhou.myqcloud.com?qqzzzz184398437zzzze3eed05b65dbfaad0fd51a69912ceb528cddd0ce';
+      const search = location.search;
+      const params = search.split('zzzz');
+      // const type = 'wx';
+      const type = params[0].replace('?', '');
+      const o = params[1];
+      // const i = 'e3eed05b65dbfaad0fd51a69912ceb528cddd0ce';
+      const i = params[2];
+      const isQQ = type === 'qq';
+      if (isQQ) {
+        document.title = '加QQ群：' + o;
+      } else {
+        document.title = '加微信：' + o;
+      }
+      const app = new Vue({
+        el: '#app',
+        data: function () {
+          return {
+            showBtn: !isQQ,
+            imgUrl: 'https://article.biliimg.com/bfs/article/' + i + '.png',
+            text: isQQ ? '点击加QQ群' : '点击复制微信',
+            test: 'test',
+            showOpenTips: isQQ,
+          };
+        },
+        methods: {
+          copy() {
+            copyTextToClipboard(o);
+            if (isQQ) {
+              this.openQQ();
+            } else {
+              this.openWX();
+            }
+          },
+          openQQ() {
+            const url =
+              'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=' +
+              o +
+              '&card_type=group&source=external';
+            window.location.href = url;
+            // this.callNative({
+            //   method: 'cm.callUpApp',
+            //   data: {
+            //     schemaUrl: 'mqq://',
+            //     jumpLink: url,
+            //   },
+            // });
+          },
+          openWX() {
+            const appProtocol = 'weixin://';
+            window.location.href = appProtocol;
+            // this.callNative({
+            //   method: 'cm.callUpApp',
+            //   data: {
+            //     schemaUrl: appProtocol,
+            //     // jumpLink: appProtocol,
+            //   },
+            // });
+          },
+          callNative(t) {
+            console.log(
+              window.BiliJsBridge,
+              '===========打印的 ------ callNative',
+            );
+            console.log(t, '===========打印的 ------ callNative');
+            // console.log(window.biliapp, '===========打印的 ------ callNative');
+            // console.log(
+            //   window.biliapp.openScheme.length,
+            //   '===========打印的 ------ callNative',
+            // );
+            // window.biliapp.openScheme('weixin://');
+            // window.biliapp.openScheme('mqqapi://');
+            // window.biliapp.openScheme('https://www.baidu.com');
+            // this.test = Object.keys(window.BiliJsBridge).join(',') || '暂无';
+
+            t = t || {};
+            t.data = t.data || {};
+            if (!t.method) {
+              throw new Error('no method');
+            }
+            if (window.BiliJsBridge.inited) {
+              // if (BiliJsBridge.newVersion) {
+              //   a(t);
+              // }
+            } else {
+              window.BiliJsBridge.sendTasks.push(t);
+            }
+          },
+        },
+        mounted() {
+          setTimeout(() => {
+            const ua = navigator.userAgent.toLowerCase();
+            const isBiliApp = ua.indexOf('bili') > -1;
+            if (!isBiliApp) {
+              this.showBtn = true;
+              this.showOpenTips = false;
+              this.openQQ();
+            }
+          }, 300);
+        },
+      });
+
+      // var vConsole = new window.VConsole();
+    </script>
+  </body>
+</html>
