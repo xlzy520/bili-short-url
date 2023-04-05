@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>哔哩哔哩图片上传</title>
+    <meta name="referrer" content="no-referrer" />
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <link rel="stylesheet" href="./paper.min.css" />
+    <link rel="stylesheet" href="./upload.css?v=222" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.13/index.min.js"></script>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.13/theme-chalk/index.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .el-image {
+        width: 200px;
+      }
+      .flex-items-center {
+        display: flex;
+        align-items: center;
+      }
+      .ml-2 {
+        margin-left: 10px;
+      }
+      .ml-4 {
+        margin-left: 20px;
+      }
+      .mb-2 {
+        margin-bottom: 10px;
+      }
+      .mt-2 {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" @paste="handleTPaste">
+      <h4 class="title">哔哩哔哩图片上传</h4>
+      <div class="config-container">
+        <div class="config-item">
+          <div class="config-item-label">SESSDATA：</div>
+          <div class="config-item-value">
+            <input v-model="SESSDATA" />
+          </div>
+        </div>
+        <div class="config-item">
+          <div class="config-item-label">bili_jct：</div>
+          <div class="config-item-value">
+            <input v-model="bili_jct" />
+          </div>
+        </div>
+        <div class="text-center mb-2 mt-2">
+          <button @click="saveConfig">保存配置</button>
+        </div>
+      </div>
+      <div class="form upload-container">
+        <el-upload
+          ref="upload"
+          :action="action"
+          multiple
+          list-type="picture-card"
+          :file-list="fileList"
+          :show-file-list="false"
+          :on-preview="handlePictureCardPreview"
+          :http-request="handleUpload"
+        >
+          <i class="el-icon-plus"></i>
+          <div class="el-upload__tip" slot="tip">可粘贴上传</div>
+        </el-upload>
+      </div>
+      <div class="short-url">
+        <div class="short-url-title">已上传图片</div>
+        <div v-show="!hasValue" class="short-url-item bg-gray"></div>
+        <div class="upload-list" v-show="hasValue">
+          <div v-for="item in list" :key="item.url" class="short-url-item">
+            <img class="upload-img" :src="item.localUrl" alt="" />
+            <div class="img-info">
+              <div class="short-url-value">{{item.name}}</div>
+              <a
+                id="short-url-value"
+                rel="noreferrer"
+                :href="item.url"
+                target="_blank"
+              >
+                <div class="short-url-value">{{item.url}}</div>
+                <svg
+                  class="outbound-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  focusable="false"
+                  x="0px"
+                  y="0px"
+                  viewBox="0 0 100 100"
+                  width="15"
+                  height="15"
+                  class="icon outbound"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"
+                  ></path>
+                  <polygon
+                    fill="currentColor"
+                    points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"
+                  ></polygon>
+                </svg>
+              </a>
+              <div class="copy" @click="copy(item.url)">复制</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <el-dialog :visible.sync="dialogVisible">
+        <img width="100%" :src="dialogImageUrl" alt="" />
+      </el-dialog>
+    </div>
+
+    <script>
+      const isDev = location.hostname === 'localhost';
+      const baseUrl = isDev ? 'http://localhost:5000' : '';
+
+      const app = new Vue({
+        el: '#app',
+        data() {
+          return {
+            dialogImageUrl: '',
+            dialogVisible: false,
+            // action: 'https://jsonplaceholder.typicode.com/posts/',
+            action: baseUrl + '/bili/upload',
+            fileList: [],
+            list: [],
+            SESSDATA: '',
+            bili_jct: '',
+          };
+        },
+        computed: {
+          hasValue() {
+            return this.list.length > 0;
+          },
+        },
+        methods: {
+          saveConfig() {
+            localStorage.setItem('SESSDATA', this.SESSDATA);
+            localStorage.setItem('bili_jct', this.bili_jct);
+            this.$message.success('保存成功');
+          },
+          copyTextToClipboard(input) {
+            var el = document.createElement('textarea');
+
+            el.value = input;
+
+            // Prevent keyboard from showing on mobile
+            el.setAttribute('readonly', '');
+
+            el.style.contain = 'strict';
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            el.style.fontSize = '12pt'; // Prevent zooming on iOS
+
+            var selection = getSelection();
+            var originalRange = false;
+            if (selection.rangeCount > 0) {
+              originalRange = selection.getRangeAt(0);
+            }
+
+            document.body.appendChild(el);
+            el.select();
+
+            // Explicit selection workaround for iOS
+            el.selectionStart = 0;
+            el.selectionEnd = input.length;
+
+            var success = false;
+            try {
+              success = document.execCommand('copy');
+            } catch (err) {}
+
+            document.body.removeChild(el);
+
+            if (originalRange) {
+              selection.removeAllRanges();
+              selection.addRange(originalRange);
+            }
+
+            return success;
+          },
+          copy(url) {
+            this.copyTextToClipboard(url);
+            this.$message({
+              message: '复制成功',
+              type: 'success',
+            });
+          },
+          filterImages(items) {
+            let i = 0;
+            while (i < items.length) {
+              if (items[i].type.includes('image')) {
+                return items[i];
+              }
+              i++;
+            }
+            return false;
+          },
+          getFilename(e) {
+            let value;
+            if (window.clipboardData && window.clipboardData.getData) {
+              value = window.clipboardData.getData('Text');
+            } else if (e.clipboardData && e.clipboardData.getData) {
+              value = e.clipboardData.getData('text/plain');
+            }
+            value = value.split('\r');
+            return value[0];
+          },
+          getPasteImg(event) {
+            if (event.clipboardData && event.clipboardData.items) {
+              const image = this.filterImages(event.clipboardData.items);
+              if (image) {
+                event.preventDefault();
+                const file = image.getAsFile();
+                const name =
+                  this.getFilename(event) || `image-${Date.now()}.png`;
+                file.uid = name;
+                const url = URL.createObjectURL(file);
+                return {
+                  name,
+                  file,
+                  raw: file,
+                  uid: name,
+                  status: 'ready',
+                  url,
+                };
+              }
+            }
+          },
+          handlePictureCardPreview(file) {
+            this.dialogImageUrl = file.url;
+            this.dialogVisible = true;
+          },
+          handleTPaste(event) {
+            const image = this.getPasteImg(event);
+            if (image) {
+              this.fileList.push(image);
+              this.$nextTick(() => {
+                this.$refs.upload.submit(image);
+              });
+            }
+          },
+          handleUpload({ file }) {
+            const reader = new FileReader();
+            // 当文件读取完成后执行的回调函数
+            reader.onload = (evt) => {
+              const base64 = reader.result;
+              // 上传图片
+              fetch(this.action, {
+                method: 'POST',
+                body: JSON.stringify({
+                  cover: base64,
+                  csrf: this.bili_jct,
+                  SESSDATA: this.SESSDATA,
+                }),
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              })
+                .then((res) => res.json())
+                .then((res) => {
+                  if (res.success) {
+                    const url = res.data.url;
+                    file.url = url;
+                    file.status = 'success';
+                    // this.fileList.push(file);
+                    this.list.push({
+                      url,
+                      name: file.name,
+                      localUrl: file.url,
+                    });
+                    console.log(this.list);
+                  }
+                })
+                .catch(() => {
+                  this.fileList.pop();
+                  this.$message.error('上传失败');
+                });
+            };
+            // 读取文件
+            reader.readAsDataURL(file);
+          },
+        },
+        mounted() {
+          this.SESSDATA = localStorage.getItem('SESSDATA') || '';
+          this.bili_jct = localStorage.getItem('bili_jct') || '';
+        },
+      });
+    </script>
+  </body>
+</html>
