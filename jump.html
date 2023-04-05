@@ -221,14 +221,10 @@
     <!--    <script src="https://s1.hdslb.com/bfs/static/cm/tetris/js/chunk-common.7d5336b7.js"></script>-->
     <!--    <script src="https://s1.hdslb.com/bfs/static/cm/tetris/js/page.f854c025.js"></script>-->
     <script>
-      // const test =
-      //   'https://my-bucket-ow740kk-1253419200.cos-website.ap-guangzhou.myqcloud.com?qqzzzz184398437zzzze3eed05b65dbfaad0fd51a69912ceb528cddd0ce';
       const search = location.search;
       const params = search.split('zzzz');
-      // const type = 'wx';
       const type = params[0].replace('?', '');
       const o = params[1];
-      // const i = 'e3eed05b65dbfaad0fd51a69912ceb528cddd0ce';
       const i = params[2];
       const isQQ = type === 'qq';
       if (isQQ) {
