@@ -41,6 +41,9 @@
   <body>
     <div id="app" @paste="handleTPaste">
       <h4 class="title">哔哩哔哩图片上传</h4>
+      <div class="text-center text-danger" @click="showTips">
+        点击查看SESSDATA和bili_jct获取方法
+      </div>
       <div class="config-container">
         <div class="config-item">
           <div class="config-item-label">SESSDATA：</div>
@@ -115,6 +118,13 @@
           </div>
         </div>
       </div>
+      <el-dialog :visible.sync="tipsVisible">
+        <div class="text-danger" style="font-size: 20px">
+          获取csrf: 登录哔哩哔哩→F12打开控制台→Application→Cookies→bili_jct
+
+        </div>
+        <img src="https://i0.hdslb.com/bfs/album/fe1a58c25c42743d5f1e186639218ee75a133df2.png" alt="">
+      </el-dialog>
 
       <el-dialog :visible.sync="dialogVisible">
         <img width="100%" :src="dialogImageUrl" alt="" />
@@ -137,6 +147,7 @@
             list: [],
             SESSDATA: '',
             bili_jct: '',
+            tipsVisible: false
           };
         },
         computed: {
@@ -145,6 +156,9 @@
           },
         },
         methods: {
+          showTips(){
+            this.tipsVisible = true
+          },
           saveConfig() {
             localStorage.setItem('SESSDATA', this.SESSDATA);
             localStorage.setItem('bili_jct', this.bili_jct);
