@@ -46,9 +46,6 @@
       <input id="origin_url" type="url" name="origin_url" v-model="inputUrl" @input="inputUrlChange" :placeholder="defaultValue">
       <svg class="close-icon" v-show="closeIconVisible" @click="clearInput" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z" fill="currentColor"></path></svg>
     </div>
-    <div class="tips">目前第三方链接已被B站封禁</div>
-    <div class="tips" style="font-size: 18px">搜索框短链生成，加微信</div>
-
     <div class="submit-btn" id="submit" @click="handleSubmit">生成短链</div>
 
     <div class="warn-tips"></div>
@@ -71,19 +68,6 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="buy-me-coffee" >
-    <div class="buy-me-coffee-header">
-      <div class="short-url-title">觉得好用，赞赏</div>
-      <div class="wx-tips">
-        有问题可以联系微信: <span class="vx" @click="copy(wechatAccount)">{{wechatAccount}}（点击复制）</span>
-      </div>
-    </div>
-    <div hidden class="" @click="downloadImg">
-      <img class="" src="https://zhibi-common.oss-cn-shanghai.aliyuncs.com/wx.jpeg"/>
-      <!--      <div class="img-tips">点击保存</div>-->
-    </div>
-
   </div>
   <div class="footer">
   </div>
@@ -127,7 +111,6 @@
       loadingVisible: false,
       limit: 1,
       list: [],
-      wechatAccount: 'appl532978'
     },
     computed: {
       hasValue() {
