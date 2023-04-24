@@ -296,6 +296,9 @@
                     });
                     this.copy(url);
                     console.log(this.list);
+                  } else {
+                    this.fileList.pop();
+                    this.$message.error(res.message);
                   }
                 })
                 .catch(() => {
