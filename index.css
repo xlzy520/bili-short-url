@@ -138,10 +138,32 @@ html, body {
   align-items: center;
   justify-content: space-between;
 }
+.buy-me-coffee .short-url-title{
+  color: rgb(147, 51, 234);
+}
 .buy-me-coffee img{
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border: none;
+  width: 100%;
   margin: auto;
   margin-top: 30px;
-  height: 300px;
+}
+.money{
+  color: #ff001c;
+  font-size: 30px;
+  font-weight: 600;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.buy-me-coffee-tips{
+  font-size: 30px;
+  color: rgb(147, 51, 234);
+}
+.mt-2{
+  margin-top: 10px;
 }
 
 .img-tips{
