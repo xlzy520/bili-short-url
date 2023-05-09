@@ -75,8 +75,8 @@
     <div class="">
       <img referrerpolicy="no-referrer" src="https://article.biliimg.com/bfs/article/ba8c1f7cad481218c76f94319c8edcf729b061e8.png" alt="">
     </div>
-    <div class="buy-me-coffee-tips">
-      <div class="mt-2">截图保存上方二维码，点击下载快手极速版 ，按下面步骤扫码，加我微信平分红包</div>
+    <div class="buy-me-coffee-tips" @click="toKSDownload">
+      <div class="mt-2">截图保存上方二维码，点击此处下载快手极速版 ，按下面步骤扫码，加我微信平分红包</div>
       <img referrerpolicy="no-referrer" src="https://article.biliimg.com/bfs/article/66353a12389f745a009fb7e99cd745e16ab379c3.jpg" alt="">
       <img referrerpolicy="no-referrer" src="https://article.biliimg.com/bfs/article/8fe71bc9cde87394431b176e21748c31bfa15812.jpg" alt="">
     </div>
@@ -115,13 +115,6 @@
 </div>
 
 <script>
-  const buyMeCoffee = document.querySelector('.buy-me-coffee');
-  if (buyMeCoffee) {
-    buyMeCoffee.addEventListener('click', function () {
-      location.href = 'https://tho5.avcxktcv.com/f/X-6RUtKldLJzW17O?layoutType=4';
-    })
-  }
-
   const isDev = location.hostname === 'localhost';
   const baseUrl = isDev ? 'http://localhost:5000/' : 'https://service-ijd4slqi-1253419200.gz.apigw.tencentcs.com/release/';
 
@@ -270,6 +263,9 @@
       },
       overlayClick(evt) {
         this.recommendVisible = false
+      },
+      toKSDownload() {
+        location.href = 'https://tho5.avcxktcv.com/f/X-6RUtKldLJzW17O?layoutType=4';
       },
     }
   });
